@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: go-app-service-monitor  # Label for monitoring setup
+    release: monitoring
+  name: go-app-service-monitor
+  namespace: monitoring  # Adjust this if needed
+spec:
+  jobLabel: job  # Prometheus job label (you can change this if required)
+  endpoints:
+    - interval: 15s  # Scraping interval
+      port: go-app-port  # Reference the named port from the Service
+      path: /prometheus  # Path where your Go app exposes metrics
+  selector:
+    matchLabels:
+      app: go-app  # The ServiceMonitor will match the label 'app=go-app'
+  namespaceSelector:
+    matchNames:
+      - default  # Namespace where your service is running

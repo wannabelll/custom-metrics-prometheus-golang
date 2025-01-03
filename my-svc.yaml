@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: go-app  # Label to match in the ServiceMonitor selector
+  name: go-app-service
+spec:
+  ports:
+    - name: go-app-port
+      port: 80  # Expose a different port, e.g., port 80 externally
+      targetPort: 9000  # Target the container's port for metrics
+  selector:
+    app: go-app  # Ensure this matches the label in the Deployment
+  type: ClusterIP  # Assuming internal traffic within the cluster

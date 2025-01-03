@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: go-app  # Label for selecting the service
+    # You can add more labels here if needed
+  name: go-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app  # Ensure the label matches the Service selector
+  template:
+    metadata:
+      labels:
+        app: go-app  # Ensure the label matches the Service selector
+    spec:
+      containers:
+        - image: wannabelll/prometheus-custom-metrics-go
+          name: go-app
+          ports:
+            - containerPort: 9000  # Expose the metrics endpoint on port 9000
